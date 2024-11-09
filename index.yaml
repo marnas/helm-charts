@@ -3,6 +3,26 @@ entries:
   miniflux:
   - apiVersion: v2
     appVersion: 2.2.2
+    created: "2024-11-09T21:34:46.329816489Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts/
+      version: 3.5.1
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 16.1.2
+    description: Minimalist and opinionated feed reader
+    digest: c0809af628350a8468524e0efd2eac7b8dc95b312212ddfb512b13ff5fd0ef1e
+    name: miniflux
+    sources:
+    - https://github.com/miniflux/v2
+    type: application
+    urls:
+    - https://github.com/marnas/helm-charts/releases/download/miniflux-0.1.2/miniflux-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 2.2.2
     created: "2024-11-09T21:26:58.108885823Z"
     dependencies:
     - name: common
@@ -41,4 +61,4 @@ entries:
     urls:
     - https://github.com/marnas/helm-charts/releases/download/miniflux-0.1.0/miniflux-0.1.0.tgz
     version: 0.1.0
-generated: "2024-11-09T21:26:58.108903095Z"
+generated: "2024-11-09T21:34:46.329833641Z"
