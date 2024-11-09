@@ -60,7 +60,7 @@ ingress:
     # -- Enables or disables the ingress
     enabled: false
     # -- Set the ingressClass that is used for this ingress.
-    className:
+    # className: "traefik"
     # hosts:
     #   - host: chart-example.local
     #     paths:
