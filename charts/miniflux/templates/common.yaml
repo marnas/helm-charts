@@ -14,16 +14,6 @@ controllers:
           {{- end -}}
           {{- end }}
 
-          {{- with .Values.postgresql }}
-          {{- if .enabled }}
-          DATABASE_PASSWORD:
-            secretKeyRef:
-              name: {{ $.Release.Name }}-postgresql
-              key: {{ if not .auth.password }}postgres-{{ end }}password
-          DATABASE_URL: postgres://postgres:$(DATABASE_PASSWORD)@{{ $.Release.Name }}-postgresql/{{ .auth.database }}?sslmode=disable
-          {{- end }}
-          {{- end }}
-
         probes:
           liveness:
             custom: true
