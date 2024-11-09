@@ -17,7 +17,7 @@ controllers:
           pullPolicy: IfNotPresent
 
         env:
-            # -- Postgresql connection parameters. Will be generated if Postgresql subchart is enabled. [[ref]](https://miniflux.app/docs/configuration.html#database-url)
+          # -- Postgresql connection parameters. Will be auto-generated if Postgresql subchart is enabled. [[ref]](https://miniflux.app/docs/configuration.html#database-url)
           DATABASE_URL: ""
           # -- Set to `1` to create an admin user from environment variables.
           CREATE_ADMIN: "1"
@@ -25,6 +25,11 @@ controllers:
           ADMIN_USERNAME: admin
           # -- Admin user password, it's used only if `CREATE_ADMIN` is enabled.
           ADMIN_PASSWORD: changeme
+        
+        # -- Secrets and/or ConfigMaps that will be loaded as environment variables.
+        # envFrom:
+        #   - secretRef:
+        #       name:
 
 serviceAccount:
   # -- Specifies whether a service account should be created
@@ -40,7 +45,7 @@ serviceAccount:
 
 service:
   main:
-    enabled: true
+    controller: main
     type: ClusterIP
     ports:
       http:
@@ -75,21 +80,17 @@ postgresql:
   auth:
     database: miniflux
     postgresPassword: changeme
-    # Uncomment to create a non-root user
-    # username: miniflux
-    # password: changeme
     # 
     # existingSecret: ""
     # Only used when `postgresql.auth.existingSecret` is set.
     # secretKeys:
     #   adminPasswordKey: ""
-    #   userPasswordKey: ""
-    #   replicationPasswordKey: ""
-  auth:
-  persistence:
-    enabled: false
-    # storageClass: ""
-    # size: 8Gi
-    accessModes:
-      - ReadWriteOnce
+  primary:
+    persistence:
+      enabled: true
+      # storageClass: ""
+      # existingClaim: ""
+      size: 10Gi
+      accessModes:
+        - ReadWriteOnce
 
