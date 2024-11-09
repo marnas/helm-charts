@@ -4,7 +4,7 @@ description: Minimalist and opinionated feed reader
 type: application
 
 # This is the chart version.
-version: 0.1.1
+version: 0.1.2
 
 # This is the version number of the application being deployed.
 # # It is recommended to use it with quotes.
