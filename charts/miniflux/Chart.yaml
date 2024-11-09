@@ -1,0 +1,22 @@
+apiVersion: v2
+name: miniflux
+description: Minimalist and opinionated feed reader
+type: application
+
+# This is the chart version.
+version: 0.1.0
+
+# This is the version number of the application being deployed.
+# # It is recommended to use it with quotes.
+appVersion: "2.2.2"
+
+dependencies:
+  - name: common
+    version: 3.5.1
+    repository: https://bjw-s.github.io/helm-charts/
+  - name: postgresql
+    version: 16.1.2
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
+sources:
+  - https://github.com/miniflux/v2

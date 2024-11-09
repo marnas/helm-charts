@@ -1,0 +1,95 @@
+#
+# IMPORTANT NOTE
+#
+# This chart inherits from bjw-s common library chart. You can check the full values here:
+# https://https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
+#
+
+controllers:
+  main:
+    strategy: Recreate
+
+    containers:
+      main:
+        image:
+          repository: ghcr.io/miniflux/miniflux
+          tag: 2.2.2
+          pullPolicy: IfNotPresent
+
+        env:
+            # -- Postgresql connection parameters. Will be generated if Postgresql subchart is enabled. [[ref]](https://miniflux.app/docs/configuration.html#database-url)
+          DATABASE_URL: ""
+          # -- Set to `1` to create an admin user from environment variables.
+          CREATE_ADMIN: "1"
+          # -- Admin user login, it's used only if `CREATE_ADMIN` is enabled.
+          ADMIN_USERNAME: admin
+          # -- Admin user password, it's used only if `CREATE_ADMIN` is enabled.
+          ADMIN_PASSWORD: changeme
+
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  # The identifier for this ServiceAccount will be `default`
+  create: false
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- Labels to add to the service account
+  labels: {}
+  # -- The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+service:
+  main:
+    enabled: true
+    type: ClusterIP
+    ports:
+      http:
+        port: 8080
+        # -- Specify a service targetPort if you wish to differ the service port from the application port.
+        # If `targetPort` is specified, this port number is used in the container definition instead of
+        # the `port` value. Therefore named ports are not supported for this field.
+        # targetPort:
+
+ingress:
+  main:
+    # -- Enables or disables the ingress
+    enabled: false
+    # -- Set the ingressClass that is used for this ingress.
+    className:
+    # hosts:
+    #   - host: chart-example.local
+    #     paths:
+    #       - path: /
+    #         pathType: Prefix
+
+    # tls:
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
+# -- Enable and configure postgresql database subchart under this key.
+#    For more options see [postgresql chart documentation](https://github.com/bitnami/charts/tree/main/bitnami/postgresql)
+# @default -- Enabled (See [values.yaml](./values.yaml) for more details)
+postgresql:
+  enabled: true
+  auth:
+    database: miniflux
+    postgresPassword: changeme
+    # Uncomment to create a non-root user
+    # username: miniflux
+    # password: changeme
+    # 
+    # existingSecret: ""
+    # Only used when `postgresql.auth.existingSecret` is set.
+    # secretKeys:
+    #   adminPasswordKey: ""
+    #   userPasswordKey: ""
+    #   replicationPasswordKey: ""
+  auth:
+  persistence:
+    enabled: false
+    # storageClass: ""
+    # size: 8Gi
+    accessModes:
+      - ReadWriteOnce
+
