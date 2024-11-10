@@ -1,6 +1,65 @@
 apiVersion: v1
 entries:
+  appflowy:
+  - apiVersion: v2
+    appVersion: 0.7.3
+    created: "2024-11-10T17:26:45.069252284Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts/
+      version: 3.5.1
+    - condition: gotrue.enabled
+      name: gotrue
+      repository: https://small-hack.github.io/gotrue-helm
+      version: 0.5.2
+    - condition: minio.enabled
+      name: minio
+      repository: https://charts.bitnami.com/bitnami
+      version: 14.8.5
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 20.2.1
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 16.1.2
+    description: Bring projects, wikis, and teams together with AI. AppFlowy is an
+      AI collaborative workspace where you achieve more without losing control of
+      your data. The best open source alternative to Notion.
+    digest: 74a81b1c49c5a237f9ec792d728199730b64d332f758b647e4251edecbf6a1d3
+    home: https://charts.marnas.sh/charts/appflowy/
+    icon: https://raw.githubusercontent.com/marnas/helm-charts/main/charts/appflowy/icon.svg
+    name: appflowy
+    sources:
+    - https://github.com/AppFlowy-IO/AppFlowy
+    type: application
+    urls:
+    - https://github.com/marnas/helm-charts/releases/download/appflowy-0.1.1/appflowy-0.1.1.tgz
+    version: 0.1.1
   miniflux:
+  - apiVersion: v2
+    appVersion: 2.2.2
+    created: "2024-11-10T17:26:45.182698292Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts/
+      version: 3.5.1
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 16.1.2
+    description: Minimalist and opinionated feed reader
+    digest: 082ca68b76589089ed997b0146af9445f74bd72f358c5492b38d3868cf70b741
+    home: https://charts.marnas.sh/charts/miniflux/
+    icon: https://raw.githubusercontent.com/marnas/helm-charts/main/charts/miniflux/icon.svg
+    name: miniflux
+    sources:
+    - https://github.com/miniflux/v2
+    type: application
+    urls:
+    - https://github.com/marnas/helm-charts/releases/download/miniflux-0.1.3/miniflux-0.1.3.tgz
+    version: 0.1.3
   - apiVersion: v2
     appVersion: 2.2.2
     created: "2024-11-09T21:34:46.329816489Z"
@@ -61,4 +120,4 @@ entries:
     urls:
     - https://github.com/marnas/helm-charts/releases/download/miniflux-0.1.0/miniflux-0.1.0.tgz
     version: 0.1.0
-generated: "2024-11-09T21:34:46.329833641Z"
+generated: "2024-11-10T17:26:45.182718369Z"
