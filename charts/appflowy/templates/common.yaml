@@ -1,0 +1,26 @@
+{{/* Append the hardcoded settings */}}
+{{- define "appflowy.harcodedValues" }}
+
+controllers:
+  main:
+    containers:
+      main:
+        env:
+          APPFLOWY_ENVIRONMENT: production
+          APPFLOWY_REDIS_URI: redis://appflowy-redis-master:6379
+          APPFLOWY_GOTRUE_BASE_URL: http://appflowy-gotrue
+          APPFLOWY_S3_USE_MINIO: true
+          APPFLOWY_S3_MINIO_URL: http://appflowy-minio:9000
+
+          {{- with .Values.ingress.main }}
+          {{- if .enabled }}
+          APPFLOWY_GOTRUE_EXT_URL: http{{ if .tls }}s{{ end }}://{{ (first .hosts).host }}/
+          APPFLOWY_WEB_URL: http{{ if .tls }}s{{ end }}://{{ (first .hosts).host }}/
+          {{- end -}}
+          {{- end }}
+
+{{- end -}}
+{{- $_ := merge .Values (include "appflowy.harcodedValues" . | fromYaml) -}}
+
+{{/* Render the templates */}}
+{{ include "bjw-s.common.loader.all" . }}

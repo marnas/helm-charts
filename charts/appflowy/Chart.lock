@@ -1,0 +1,18 @@
+dependencies:
+- name: common
+  repository: https://bjw-s.github.io/helm-charts/
+  version: 3.5.1
+- name: gotrue
+  repository: https://small-hack.github.io/gotrue-helm
+  version: 0.5.2
+- name: minio
+  repository: https://charts.bitnami.com/bitnami
+  version: 14.8.5
+- name: redis
+  repository: https://charts.bitnami.com/bitnami
+  version: 20.2.1
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 16.1.2
+digest: sha256:26384c597356949cd6ce28c487d1f5d5dd22a1ece019d88bcf3937c2fdee8c01
+generated: "2024-11-10T14:19:27.913854704Z"

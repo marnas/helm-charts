@@ -1,0 +1,166 @@
+#
+# IMPORTANT NOTE
+#
+# This chart inherits from bjw-s common library chart. You can check the full values here:
+# https://https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
+#
+
+controllers:
+  main:
+    strategy: Recreate
+
+    containers:
+      main:
+        image:
+          repository: docker.io/appflowyinc/appflowy_cloud
+          tag: 0.7.2-stateless
+          pullPolicy: IfNotPresent
+
+        env:
+          APPFLOWY_DATABASE_URL: postgres://postgres:changeme@appflowy-postgresql/postgres?sslmode=disable
+          APPFLOWY_GOTRUE_JWT_SECRET: changeme
+          APPFLOWY_GOTRUE_ADMIN_EMAIL: admin@mail.com
+          APPFLOWY_GOTRUE_ADMIN_PASSWORD: changeme
+          APPFLOWY_S3_ACCESS_KEY: admin
+          APPFLOWY_S3_SECRET_KEY: changeme
+          APPFLOWY_S3_BUCKET: appflowy
+          # APPFLOWY_S3_REGION: APPFLOWY_S3_REGION}
+          # APPFLOWY_ACCESS_CONTROL: APPFLOWY_ACCESS_CONTROL}
+        
+        # -- Secrets and/or ConfigMaps that will be loaded as environment variables.
+        # envFrom:
+        #   - secretRef:
+        #       name:
+
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  # The identifier for this ServiceAccount will be `default`
+  create: false
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- Labels to add to the service account
+  labels: {}
+  # -- The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+service:
+  main:
+    controller: main
+    type: ClusterIP
+    ports:
+      http:
+        port: 8000
+        # -- Specify a service targetPort if you wish to differ the service port from the application port.
+        # If `targetPort` is specified, this port number is used in the container definition instead of
+        # the `port` value. Therefore named ports are not supported for this field.
+        # targetPort:
+
+ingress:
+  main:
+    # -- Enables or disables the ingress
+    enabled: false
+    # -- Set the ingressClass that is used for this ingress.
+    # className: "traefik"
+    # hosts:
+    #   - host: chart-example.local
+    #     paths:
+    #       - path: /
+    #         pathType: Prefix
+
+    # tls:
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
+# -- Enable and configure gotrue subchart under this key.
+#    For more options see [gotrue chart documentation](https://github.com/small-hack/gotrue-helm/blob/main/README.md)
+gotrue:
+  enabled: true
+  gotrue:
+    siteUrl: appflowy-flutter://
+    jwt:
+      secret: changeme
+    # auth:
+    #   rootUser: admin
+    #   rootPassword: changeme
+    #   # Use existing secret for credentials details (auth.rootUser and auth.rootPassword will be ignored and picked up from this secret).
+    #   # existingSecret: 
+    #   # rootUserSecretKey: APPFLOWY_S3_ACCESS_KEY
+    #   # rootPasswordSecretKey: APPFLOWY_S3_SECRET_KEY
+    database:
+      # -- use an existingSecret for database. must contain keys: DATABASE_URL, GOTRUE_DB_DRIVER, DB_NAMESPACE
+      # existingSecret: ""
+      # -- database connection url
+      # e.g. postgres://supabase_auth_admin:root@postgresql.gotrue.svc.cluster.local:5432/gotrue
+      # only required if you don't pass in driver, user, host, port, and
+      databaseUrl: postgres://supabase_auth_admin:changeme@appflowy-postgresql/postgres?sslmode=disable
+
+# -- Enable and configure minio subchart under this key.
+#    For more options see [minio chart documentation](https://github.com/bitnami/charts/tree/main/bitnami/minio)
+minio:
+  enabled: true
+  auth:
+    rootUser: admin
+    rootPassword: changeme
+    # Use existing secret for credentials details (auth.rootUser and auth.rootPassword will be ignored and picked up from this secret).
+    # existingSecret: 
+    # rootUserSecretKey: APPFLOWY_S3_ACCESS_KEY
+    # rootPasswordSecretKey: APPFLOWY_S3_SECRET_KEY
+  defaultBuckets: appflowy
+  persistence:
+    enabled: true
+    # storageClass: ""
+    # existingClaim: ""
+    size: 50Gi
+    accessModes:
+      - ReadWriteOnce
+
+# -- Enable and configure redis subchart under this key.
+#    For more options see [redis chart documentation](https://github.com/bitnami/charts/tree/main/bitnami/redis)
+redis:
+  enabled: true
+
+# -- Enable and configure postgresql database subchart under this key.
+#    For more options see [postgresql chart documentation](https://github.com/bitnami/charts/tree/main/bitnami/postgresql)
+postgresql:
+  enabled: true
+  auth:
+    database: postgres
+    postgresPassword: changeme
+    # Custom user to create for Minio
+    username: supabase_auth_admin
+    password: changeme
+    # 
+    # existingSecret: ""
+    # Only used when `postgresql.auth.existingSecret` is set.
+    # secretKeys:
+    #   adminPasswordKey: ""
+  primary:
+    persistence:
+      enabled: true
+      # storageClass: ""
+      # existingClaim: ""
+      size: 20Gi
+      accessModes:
+        - ReadWriteOnce
+    # This first postgres setup is needed for gotrue - further information can be found here https://github.com/small-hack/gotrue-helm/blob/main/README.md#database-notes
+    # suggested pgba.conf
+    pgHbaConfiguration: |-
+      local all all trust
+      host all all 127.0.0.1/32 md5
+      host all postgres 10.0.0.0/8 md5
+      host all gotrue 10.0.0.0/8 md5
+      host all supabase_auth_admin 10.0.0.0/8 md5
+    # suggested init for postgres
+    initdb:
+      user: postgres
+      password: changeme
+      scripts:
+        # please change the password below to something secure
+        setup.sql: |
+          CREATE USER supabase_admin LOGIN CREATEROLE CREATEDB REPLICATION BYPASSRLS;
+          CREATE USER supabase_auth_admin NOINHERIT CREATEROLE LOGIN NOREPLICATION PASSWORD 'changeme';
+          CREATE SCHEMA IF NOT EXISTS auth AUTHORIZATION supabase_auth_admin;
+          GRANT CREATE ON DATABASE postgres TO supabase_auth_admin;
+          ALTER USER supabase_auth_admin SET search_path = 'auth';
