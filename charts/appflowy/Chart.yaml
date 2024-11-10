@@ -1,10 +1,12 @@
 apiVersion: v2
 name: appflowy
 description: Bring projects, wikis, and teams together with AI. AppFlowy is an AI collaborative workspace where you achieve more without losing control of your data. The best open source alternative to Notion. 
+home: https://charts.marnas.sh/charts/appflowy/
+icon: https://raw.githubusercontent.com/marnas/helm-charts/main/charts/appflowy/icon.svg
 type: application
 
 # This is the chart version.
-version: 0.1.0
+version: 0.1.1
 
 # This is the version number of the application being deployed.
 # # It is recommended to use it with quotes.
