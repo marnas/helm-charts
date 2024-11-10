@@ -2,11 +2,11 @@ apiVersion: v2
 name: miniflux
 description: Minimalist and opinionated feed reader
 home: https://charts.marnas.sh/charts/miniflux/
-icon: https://raw.githubusercontent.com/marnas/helm-charts/main/charts/miniflux/icon.svg
+icon: https://raw.githubusercontent.com/marnas/helm-charts/main/charts/miniflux/icon.png
 type: application
 
 # This is the chart version.
-version: 0.1.3
+version: 0.1.4
 
 # This is the version number of the application being deployed.
 # # It is recommended to use it with quotes.
