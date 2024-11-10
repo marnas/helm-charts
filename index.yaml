@@ -3,6 +3,42 @@ entries:
   appflowy:
   - apiVersion: v2
     appVersion: 0.7.3
+    created: "2024-11-10T17:32:58.718616983Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts/
+      version: 3.5.1
+    - condition: gotrue.enabled
+      name: gotrue
+      repository: https://small-hack.github.io/gotrue-helm
+      version: 0.5.2
+    - condition: minio.enabled
+      name: minio
+      repository: https://charts.bitnami.com/bitnami
+      version: 14.8.5
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 20.2.1
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 16.1.2
+    description: Bring projects, wikis, and teams together with AI. AppFlowy is an
+      AI collaborative workspace where you achieve more without losing control of
+      your data. The best open source alternative to Notion.
+    digest: 5fe2907ad277d90d23272edc4c7e88214ad76c0fb7663240f594750b9946503e
+    home: https://charts.marnas.sh/charts/appflowy/
+    icon: https://raw.githubusercontent.com/marnas/helm-charts/main/charts/appflowy/icon.png
+    name: appflowy
+    sources:
+    - https://github.com/AppFlowy-IO/AppFlowy
+    type: application
+    urls:
+    - https://github.com/marnas/helm-charts/releases/download/appflowy-0.1.2/appflowy-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 0.7.3
     created: "2024-11-10T17:26:45.069252284Z"
     dependencies:
     - name: common
@@ -38,6 +74,28 @@ entries:
     - https://github.com/marnas/helm-charts/releases/download/appflowy-0.1.1/appflowy-0.1.1.tgz
     version: 0.1.1
   miniflux:
+  - apiVersion: v2
+    appVersion: 2.2.2
+    created: "2024-11-10T17:32:58.826541403Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts/
+      version: 3.5.1
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 16.1.2
+    description: Minimalist and opinionated feed reader
+    digest: 1fa2ae4ba35805e59e0c3fbaf78932d9b43c3c315eaa4b92b9fae9a403193cb6
+    home: https://charts.marnas.sh/charts/miniflux/
+    icon: https://raw.githubusercontent.com/marnas/helm-charts/main/charts/miniflux/icon.png
+    name: miniflux
+    sources:
+    - https://github.com/miniflux/v2
+    type: application
+    urls:
+    - https://github.com/marnas/helm-charts/releases/download/miniflux-0.1.4/miniflux-0.1.4.tgz
+    version: 0.1.4
   - apiVersion: v2
     appVersion: 2.2.2
     created: "2024-11-10T17:26:45.182698292Z"
@@ -120,4 +178,4 @@ entries:
     urls:
     - https://github.com/marnas/helm-charts/releases/download/miniflux-0.1.0/miniflux-0.1.0.tgz
     version: 0.1.0
-generated: "2024-11-10T17:26:45.182718369Z"
+generated: "2024-11-10T17:32:58.826567371Z"
