@@ -3,6 +3,24 @@ entries:
   actual:
   - apiVersion: v2
     appVersion: 24.11.0
+    created: "2024-11-17T20:11:59.04092879Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts/
+      version: 3.5.1
+    description: A local-first personal finance app
+    digest: 6ebb6cab79861d55823d26aac0702474161083800dfdbb46e58c16d3b2689838
+    home: https://charts.marnas.sh/charts/actual/
+    icon: https://raw.githubusercontent.com/marnas/helm-charts/main/charts/actual/icon.png
+    name: actual
+    sources:
+    - https://github.com/actualbudget/actual
+    type: application
+    urls:
+    - https://github.com/marnas/helm-charts/releases/download/actual-0.1.2/actual-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 24.11.0
     created: "2024-11-17T19:53:49.088972577Z"
     dependencies:
     - name: common
@@ -93,6 +111,28 @@ entries:
     - https://github.com/marnas/helm-charts/releases/download/appflowy-0.1.1/appflowy-0.1.1.tgz
     version: 0.1.1
   miniflux:
+  - apiVersion: v2
+    appVersion: 2.2.2
+    created: "2024-11-17T20:11:59.140276222Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts/
+      version: 3.5.1
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 16.1.2
+    description: Minimalist and opinionated feed reader
+    digest: 780efff4f3eb819e81493c22fa69ea6b92da8373bd9b8c70915adf38682a3ae7
+    home: https://charts.marnas.sh/charts/miniflux/
+    icon: https://raw.githubusercontent.com/marnas/helm-charts/main/charts/miniflux/icon.png
+    name: miniflux
+    sources:
+    - https://github.com/miniflux/v2
+    type: application
+    urls:
+    - https://github.com/marnas/helm-charts/releases/download/miniflux-0.1.6/miniflux-0.1.6.tgz
+    version: 0.1.6
   - apiVersion: v2
     appVersion: 2.2.2
     created: "2024-11-17T19:53:49.245381359Z"
@@ -219,4 +259,4 @@ entries:
     urls:
     - https://github.com/marnas/helm-charts/releases/download/miniflux-0.1.0/miniflux-0.1.0.tgz
     version: 0.1.0
-generated: "2024-11-17T19:53:49.24540376Z"
+generated: "2024-11-17T20:11:59.14031271Z"
