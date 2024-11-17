@@ -6,7 +6,7 @@ icon: https://raw.githubusercontent.com/marnas/helm-charts/main/charts/miniflux/
 type: application
 
 # This is the chart version.
-version: 0.1.5
+version: 0.1.6
 
 # This is the version number of the application being deployed.
 # # It is recommended to use it with quotes.
