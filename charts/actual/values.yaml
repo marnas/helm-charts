@@ -12,8 +12,8 @@ controllers:
     containers:
       main:
         image:
-          repository: ghcr.io/miniflux/miniflux
-          tag: 2.2.2
+          repository: ghcr.io/actualbudget/actual-server
+          tag: 24.11.0 
           pullPolicy: IfNotPresent
 
         # env:
@@ -49,7 +49,7 @@ service:
     type: ClusterIP
     ports:
       http:
-        port: 8080
+        port: 5006
         # -- Specify a service targetPort if you wish to differ the service port from the application port.
         # If `targetPort` is specified, this port number is used in the container definition instead of
         # the `port` value. Therefore named ports are not supported for this field.
@@ -72,25 +72,30 @@ ingress:
     #    hosts:
     #      - chart-example.local
 
-# -- Enable and configure postgresql database subchart under this key.
-#    For more options see [postgresql chart documentation](https://github.com/bitnami/charts/tree/main/bitnami/postgresql)
-# @default -- Enabled (See [values.yaml](./values.yaml) for more details)
-postgresql:
-  enabled: true
-  auth:
-    database: miniflux
-    postgresPassword: changeme
-    # 
-    # existingSecret: ""
-    # Only used when `postgresql.auth.existingSecret` is set.
-    # secretKeys:
-    #   adminPasswordKey: "POSTGRES_PASSWORD"
-  primary:
-    persistence:
-      enabled: true
-      # storageClass: ""
-      # existingClaim: ""
-      size: 10Gi
-      accessModes:
-        - ReadWriteOnce
+# -- Configure persistence for the chart here.
+# Additional items can be added by adding a dictionary key similar to the 'config' key.
+# [[ref]](https://bjw-s.github.io/helm-charts/docs/common-library/common-library-storage)
+# @default -- See below
+persistence:
+  config:
+    # -- Enables or disables the persistence item. Defaults to true
+    enabled: true
+    # -- Sets the persistence type
+    # Valid options are persistentVolumeClaim, emptyDir, nfs, hostPath, secret, configMap or custom
+    type: persistentVolumeClaim
+    # storageClass: "-"
+    existingClaim: # your-claim
+    accessMode: ReadWriteOnce
 
+    # -- The amount of storage that is requested for the persistent volume.
+    size: 10Gi
+    # -- Set to true to retain the PVC upon `helm uninstall`
+    retain: false
+
+    advancedMounts:
+      main: # the controller with the "main" identifier
+        main: # the container with the "main" identifier
+          - path: /data
+            readOnly: false
+            # mountPropagation: None
+            # subPath: config.yaml

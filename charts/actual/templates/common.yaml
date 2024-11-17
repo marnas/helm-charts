@@ -1,0 +1,21 @@
+{{/* Append the hardcoded settings */}}
+{{- define "actual.harcodedValues" }}
+
+controllers:
+  main:
+    containers:
+      main:
+        # env:
+
+        probes:
+          liveness:
+            custom: true
+            spec:
+              httpGet:
+                path: /healthcheck
+                port: {{ .Values.service.main.ports.http.port }}
+{{- end -}}
+{{- $_ := merge .Values (include "actual.harcodedValues" . | fromYaml) -}}
+
+{{/* Render the templates */}}
+{{ include "bjw-s.common.loader.all" . }}
