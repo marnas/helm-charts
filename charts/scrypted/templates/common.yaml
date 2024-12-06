@@ -1,0 +1,16 @@
+{{/* Append the hardcoded settings */}}
+{{- define "scrypted.harcodedValues" }}
+
+controllers:
+  main:
+    containers:
+      main:
+        env:
+          SCRYPTED_WEBHOOK_UPDATE_AUTHORIZATION: "Bearer $WATCHTOWER_HTTP_API_TOKEN"
+          SCRYPTED_WEBHOOK_UPDATE: "http://localhost:8080/v1/update"
+
+{{- end -}}
+{{- $_ := merge .Values (include "scrypted.harcodedValues" . | fromYaml) -}}
+
+{{/* Render the templates */}}
+{{ include "bjw-s.common.loader.all" . }}

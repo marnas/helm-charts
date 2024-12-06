@@ -1,0 +1,21 @@
+apiVersion: v2
+name: scrypted
+description: Scrypted is a high performance video integration and automation platform 
+home: https://charts.marnas.sh/charts/scrypted/
+icon: https://raw.githubusercontent.com/marnas/helm-charts/main/charts/scrypted/icon.png
+type: application
+
+# This is the chart version.
+version: 0.1.0
+
+# This is the version number of the application being deployed.
+# # It is recommended to use it with quotes.
+appVersion: "v0.123.58"
+
+dependencies:
+  - name: common
+    version: 3.5.1
+    repository: https://bjw-s.github.io/helm-charts/
+sources:
+  - https://github.com/koush/scrypted
+

@@ -1,0 +1,103 @@
+#
+# IMPORTANT NOTE
+#
+# This chart inherits from bjw-s common library chart. You can check the full values here:
+# https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
+#
+
+controllers:
+  main:
+    strategy: Recreate
+
+    containers:
+      main:
+        image:
+          repository: ghcr.io/koush/scrypted
+          tag: v0.123.58-jammy-nvidia
+          pullPolicy: IfNotPresent
+
+        # env:
+          # -- Postgresql connection parameters. Will be auto-generated if Postgresql subchart is enabled. [[ref]](https://miniflux.app/docs/configuration.html#database-url)
+          # DATABASE_URL: ""
+          # -- Set to `1` to create an admin user from environment variables.
+          # CREATE_ADMIN: "1"
+          # -- Admin user login, it's used only if `CREATE_ADMIN` is enabled.
+          # ADMIN_USERNAME: admin
+          # -- Admin user password, it's used only if `CREATE_ADMIN` is enabled.
+          # ADMIN_PASSWORD: changeme
+        
+        # -- Secrets and/or ConfigMaps that will be loaded as environment variables.
+        # envFrom:
+        #   - secretRef:
+        #       name:
+
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  # The identifier for this ServiceAccount will be `default`
+  create: false
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- Labels to add to the service account
+  labels: {}
+  # -- The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+service:
+  main:
+    controller: main
+    type: ClusterIP
+    ports:
+      http:
+        port: 8080
+        # -- Specify a service targetPort if you wish to differ the service port from the application port.
+        # If `targetPort` is specified, this port number is used in the container definition instead of
+        # the `port` value. Therefore named ports are not supported for this field.
+        # targetPort:
+
+ingress:
+  main:
+    # -- Enables or disables the ingress
+    enabled: false
+    # -- Set the ingressClass that is used for this ingress.
+    # className: "traefik"
+    # hosts:
+    #   - host: chart-example.local
+    #     paths:
+    #       - path: /
+    #         pathType: Prefix
+    #         service:
+    #           identifier: main
+
+    # tls:
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
+# -- Configure persistence for the chart here.
+# Additional items can be added by adding a dictionary key similar to the 'config' key.
+# [[ref]](https://bjw-s.github.io/helm-charts/docs/common-library/common-library-storage)
+# @default -- See below
+persistence:
+  config:
+    # -- Enables or disables the persistence item. Defaults to true
+    enabled: true
+    # -- Sets the persistence type
+    # Valid options are persistentVolumeClaim, emptyDir, nfs, hostPath, secret, configMap or custom
+    type: persistentVolumeClaim
+    # storageClass: "-"
+    existingClaim: # your-claim
+    accessMode: ReadWriteOnce
+
+    # -- The amount of storage that is requested for the persistent volume.
+    size: 10Gi
+    # -- Set to true to retain the PVC upon `helm uninstall`
+    retain: false
+
+    advancedMounts:
+      main: # the controller with the "main" identifier
+        main: # the container with the "main" identifier
+          - path: /server/volume
+            readOnly: false
+            # mountPropagation: None
+            # subPath: config.yaml
