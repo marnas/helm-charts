@@ -13,8 +13,18 @@ controllers:
       main:
         image:
           repository: ghcr.io/koush/scrypted
-          tag: v0.123.58-jammy-nvidia
+          tag: v0.123.63-noble-lite
           pullPolicy: IfNotPresent
+
+        ports:
+        - name: https
+          hostPort: 10443
+          containerPort: 10443
+          protocol: TCP
+        - name: http
+          hostPort: 11080
+          containerPort: 11080
+          protocol: TCP
 
         # env:
           # -- Postgresql connection parameters. Will be auto-generated if Postgresql subchart is enabled. [[ref]](https://miniflux.app/docs/configuration.html#database-url)

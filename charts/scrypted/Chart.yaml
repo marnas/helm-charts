@@ -6,11 +6,11 @@ icon: https://raw.githubusercontent.com/marnas/helm-charts/main/charts/scrypted/
 type: application
 
 # This is the chart version.
-version: 0.1.0
+version: 0.1.1
 
 # This is the version number of the application being deployed.
 # # It is recommended to use it with quotes.
-appVersion: "v0.123.58"
+appVersion: "v0.123.63"
 
 dependencies:
   - name: common

@@ -6,7 +6,7 @@ controllers:
     containers:
       main:
         env:
-          SCRYPTED_WEBHOOK_UPDATE_AUTHORIZATION: "Bearer $WATCHTOWER_HTTP_API_TOKEN"
+          SCRYPTED_WEBHOOK_UPDATE_AUTHORIZATION: "Bearer SET_THIS_TO_SOME_RANDOM_TEXT"
           SCRYPTED_WEBHOOK_UPDATE: "http://localhost:8080/v1/update"
 
 {{- end -}}
