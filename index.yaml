@@ -261,6 +261,24 @@ entries:
     version: 0.1.0
   scrypted:
   - apiVersion: v2
+    appVersion: v0.123.63
+    created: "2024-12-15T13:05:05.896578319Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts/
+      version: 3.5.1
+    description: Scrypted is a high performance video integration and automation platform
+    digest: 696b6fc3a6f5e57aa022da18f6f2e1d3de4418b9d0cad234a462c1ade5a25c3d
+    home: https://charts.marnas.sh/charts/scrypted/
+    icon: https://raw.githubusercontent.com/marnas/helm-charts/main/charts/scrypted/icon.png
+    name: scrypted
+    sources:
+    - https://github.com/koush/scrypted
+    type: application
+    urls:
+    - https://github.com/marnas/helm-charts/releases/download/scrypted-0.1.1/scrypted-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: v0.123.58
     created: "2024-12-06T19:10:42.081105468Z"
     dependencies:
@@ -278,4 +296,4 @@ entries:
     urls:
     - https://github.com/marnas/helm-charts/releases/download/scrypted-0.1.0/scrypted-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-06T19:10:42.081134783Z"
+generated: "2024-12-15T13:05:05.896599088Z"
